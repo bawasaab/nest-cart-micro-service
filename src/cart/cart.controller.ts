@@ -7,7 +7,7 @@ import {
   Param,
   Body,
 } from '@nestjs/common';
-import { MessagePattern } from '@nestjs/microservices';
+import { EventPattern, MessagePattern } from '@nestjs/microservices';
 import { CartService } from './cart.service';
 import { CreateCartDto } from './dto/create-cart.dto';
 import { UpdateCartDto } from './dto/update-cart.dto';
@@ -18,7 +18,7 @@ export class CartController {
   constructor(private readonly cartService: CartService) {}
 
   @Post()
-  @MessagePattern('createCart')
+  @EventPattern('createCart')
   create(@Body() createCartDto: CreateCartDto) {
     return this.cartService.create(createCartDto);
   }
@@ -26,24 +26,25 @@ export class CartController {
   @Get()
   @MessagePattern('findAllCart')
   findAll() {
+    console.log('findAll cart controller microservice');
     return this.cartService.findAll();
   }
 
   @Get(':id')
   @MessagePattern('findOneCart')
-  findOne(@Param('id') id: ObjectId) {
+  findOne(@Body('id') id: ObjectId) {
     return this.cartService.findOne(id);
   }
 
   @Patch(':id')
-  @MessagePattern('updateCart')
-  update(@Body() updateCartDto: UpdateCartDto, @Param('id') id: ObjectId) {
-    return this.cartService.update(id, updateCartDto);
+  @EventPattern('updateCart')
+  update(@Body() updateCartDto: UpdateCartDto) {
+    return this.cartService.update(updateCartDto.id, updateCartDto);
   }
 
   @Delete(':id')
-  @MessagePattern('removeCart')
-  remove(@Param('id') id: ObjectId) {
+  @EventPattern('removeCart')
+  remove(@Body('id') id: ObjectId) {
     console.log('id', id);
     return this.cartService.remove(id);
   }
