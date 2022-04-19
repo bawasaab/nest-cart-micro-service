@@ -1,12 +1,4 @@
-import {
-  Controller,
-  Delete,
-  Get,
-  Patch,
-  Post,
-  Param,
-  Body,
-} from '@nestjs/common';
+import { Controller, Delete, Get, Patch, Post, Body } from '@nestjs/common';
 import { EventPattern, MessagePattern } from '@nestjs/microservices';
 import { CartService } from './cart.service';
 import { CreateCartDto } from './dto/create-cart.dto';
