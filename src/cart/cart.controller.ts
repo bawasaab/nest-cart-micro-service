@@ -36,7 +36,6 @@ export class CartController {
   @Delete(':id')
   @EventPattern('removeCart')
   remove(@Body('id') id: ObjectId) {
-    console.log('id', id);
     return this.cartService.remove(id);
   }
 }
