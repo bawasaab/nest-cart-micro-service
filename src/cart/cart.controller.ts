@@ -16,14 +16,13 @@ export class CartController {
   }
 
   @Get()
-  @MessagePattern('findAllCart')
+  @MessagePattern({ cmd: 'findAllCart' })
   findAll() {
-    console.log('findAll cart controller microservice');
     return this.cartService.findAll();
   }
 
   @Get(':id')
-  @MessagePattern('findOneCart')
+  @MessagePattern({ cmd: 'findOneCart' })
   findOne(@Body('id') id: ObjectId) {
     return this.cartService.findOne(id);
   }
